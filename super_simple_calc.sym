@@ -1,2 +1,27 @@
 //Symbol Name		Page Address
 //----------------	------------
+//	ADDITION                302B
+//	ASCIIMIN                30DC
+//	AskOp                   3096
+//	AskTerm1                305B
+//	AskTerm2                3078
+//	DIVIDE                  30DB
+//	DIVISION                3033
+//	Done                    30DD
+//	Loop1                   300A
+//	Loop2                   3014
+//	LoopS                   3002
+//	MINUS                   30D9
+//	MULT                    30DA
+//	MULTIPLICATION          3032
+//	Max                     3034
+//	OP                      30D6
+//	PLUS                    30D8
+//	START                   3000
+//	SUBTRACTION             302E
+//	TERM1                   30CE
+//	TERM2                   30D2
+//	Term1                   3007
+//	TestOp                  301F
+//	WelcomeMsg              3035
+//	nl                      30D7
