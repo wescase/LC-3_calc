@@ -112,8 +112,29 @@ SUBTRACTION 	LDR R2, R4, #0 ;load lho
 		ADD R2, R2, R3 ;add R2 + R3 and store in R2
 		; *** branch back to output the answer
 
-MULTIPLICATION	BR	Done	; *** finish
-DIVISION	BR	Done	; *** finish
+MULTIPLICATION	LDR R2, R4, #0 ;load lho
+		LDR R3, R5, #0 ;load rho
+		;do comparison and store smaller number in R6
+		;store bigger number in R3	
+		
+MultLoop	;***BRz to output 
+		ADD R2, R2, R3 ;add bigger number to itself
+		ADD R6, R6, #-1 ;subtract counter
+		BR MultLoop
+		
+
+
+DIVISION	LDR R2, R4, #0 ;load lho
+		LDR R3, R5, #0 ;load rho
+		LD  R6, #0 ;counter starts at Zero
+		NOT R3, R3 ; make rho neg to subtract
+DivLoop		ADD R2, R2, R3 ; subtract lho from rho
+		ADD R6, R6, #1 ; increment counter
+		BRzp DivLoop
+
+		ADD R6, R6, #-1 ;decrement once to get correct answer
+		;***Branch back to output. R6 will be the answer
+		
 ; -------------- VARIABLES AND CONSTANTS --------------
 Max	.FILL	x0003	; *** not cuurently used but will be used for checking only 3 digit ints used
 
