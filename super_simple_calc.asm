@@ -9,6 +9,15 @@
 	AND R6, R6, #0
 	AND R7, R7, #0
 
+	LEA R0, Welcome ;welcome message
+		PUTS
+	LD R0, NewlineChar
+	OUT
+
+Welcome		.STRINGZ	"Welcome to the Supa Simple Calculata! "
+
+
+
 Term1	LEA	R0,AskTerm1	; the following signals
 
 		PUTS			; the operator
@@ -46,6 +55,10 @@ Break2	LEA       R3,TERM1
 	PUTS
 	GETC
 	OUT
+
+TERM1		.BLKW		4
+	
+
 TestOp	LD	R1,PLUS
 	ADD	R1,R1,R0	
 	BRz	ADDITION	; if 0 then its addition
@@ -61,6 +74,12 @@ TestOp	LD	R1,PLUS
 	LD	R1,DIVIDE
 	ADD	R1,R1,R0
 	BRz	DIVISION	; if 0 then its division
+
+PLUS	.FILL	xFFD5
+MINUS	.FILL	xFFD3
+MULT	.FILL	xFFD6
+DIVIDE	.FILL	xFFD1
+
 OUTPUT	JSR BinarytoASCII
 	LD R0, NewlineChar
 	OUT
@@ -127,9 +146,6 @@ Return		RET
 
 
 
-MyNum .FILL x000A
-MyNumB .FILL x0005
-
 
 ;r2 and r3 will have the operands
 ;r0 will hold the answer
@@ -142,10 +158,24 @@ ADD R0, R2, R3
 BRnzp OUTPUT
 
 
-MULTIPLICATION ADD R0, R0, R2
+MULTIPLICATION AND R4, R4, #0
+AND R5, R5, #0
+ADD R4, R2, #0 ;r4 holds r2
+ADD R5, R3, #0 ;r5 holds R3
+NOT R5, R5
+ADD R5, R5, #1 ; NOT rho
+ADD R4, R4, R5
+Brzp Multiply
+Swap ADD R6, R2, #0
+AND R2, R2, #0
+ADD R2, R3, #0
+AND R3, R3, #0
+ADD R3, R6, #0
+Multiply AND R0, R0, #0
+MultLoop ADD R0, R0, R2
 ADD R3, R3, #-1
-BRp MULTIPLICATION
-BRnzp OUTPUT
+BRp MultLoop
+Brnzp OUTPUT
 
 
 DIVISION AND R6, R6, #0 ;counter
@@ -234,15 +264,11 @@ LookUp100      .FILL  #0
 
 ;--------------- const for ascii to bin -----------
 
-AskTerm1	.STRINGZ	"3 DIGIT NUMBER: "
-AskTerm2	.STRINGZ	"NEXT 3 DIG: "
+AskTerm1	.STRINGZ	"Enter a number (3 digits max): "
+AskTerm2	.STRINGZ	"Next number: "
 AskOp		.STRINGZ	"What type of arithmetic would you like to do (+ - * /)?"
-TERM1		.BLKW		4
-TERM2		.BLKW		4
+
 nl		.FILL		xFFF6
-PLUS	.FILL	xFFD5
-MINUS	.FILL	xFFD3
-MULT	.FILL	xFFD6
-DIVIDE	.FILL	xFFD1
+
 
 .END
